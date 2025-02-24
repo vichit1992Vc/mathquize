@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="km">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>លំហាត់គណិតវិទ្យា</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; }
+        .container { margin: 20px auto; width: 50%; text-align: left; }
+        .question { margin-bottom: 15px; }
+        button { margin-top: 15px; padding: 10px; font-size: 16px; }
+        .score { font-size: 18px; font-weight: bold; color: green; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>លំហាត់គណិតវិទ្យា</h1>
+        <form id="quiz-form">
+            <div id="questions"></div>
+            <button type="button" onclick="checkAnswers()">បញ្ជូន</button>
+        </form>
+        <h3 class="score" id="score">ពិន្ទុ: 0/100</h3>
+    </div>
+
+    <script>
+        let questions = [
+            { q: "10x + 4x + (-7x) = ?", options: ["7x", "14x", "5x"], answer: "7x" },
+            { q: "5x + 9x + (-3x) = ?", options: ["11x", "14x", "8x"], answer: "11x" },
+            { q: "7x + 2x + (-6x) = ?", options: ["3x", "9x", "5x"], answer: "3x" },
+            { q: "3x + 10x + (-4x) = ?", options: ["9x", "13x", "10x"], answer: "9x" },
+            { q: "8x + 6x + (-10x) = ?", options: ["4x", "14x", "10x"], answer: "4x" },
+            { q: "9x + 5x + (-8x) = ?", options: ["6x", "14x", "8x"], answer: "6x" },
+            { q: "4x + 3x + (-1x) = ?", options: ["6x", "7x", "5x"], answer: "6x" }
+        ];
+
+        function loadQuestions() {
+            let quizHTML = "";
+            questions.forEach((q, index) => {
+                quizHTML += `<div class='question'>
+                    <p>${index + 1}. ${q.q}</p>`;
+                q.options.forEach(opt => {
+                    quizHTML += `<label><input type='radio' name='q${index}' value='${opt}'> ${opt}</label><br>`;
+                });
+                quizHTML += "</div>";
+            });
+            document.getElementById("questions").innerHTML = quizHTML;
+        }
+
+        function checkAnswers() {
+            let score = 0;
+            questions.forEach((q, index) => {
+                let selected = document.querySelector(`input[name='q${index}']:checked`);
+                if (selected && selected.value === q.answer) {
+                    score += 10;
+                }
+            });
+            document.getElementById("score").innerText = `ពិន្ទុ: ${score}/100`;
+        }
+
+        loadQuestions();
+    </script>
+</body>
+</html>
